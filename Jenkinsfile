@@ -4,6 +4,10 @@ pipeline {
     environment {
         appName = "variable" 
     }
+    tools {
+        // Configura SonarQube Scanner como herramienta
+        sonarQube 'SonarScanner for .NET'
+    }
     stages {
         stage("paso 1"){
             steps {
