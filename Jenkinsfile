@@ -2,11 +2,10 @@ pipeline {
     agent any
 
     environment {
-        // Variables para el proyecto SonarQube
         SONAR_PROJECT_KEY = 'DevOps'
         SONAR_PROJECT_NAME = 'DevOps'
         SONAR_PROJECT_VERSION = '1.0'
-        SONAR_AUTH_TOKEN = credentials('SONAR_TOKEN') // Credencial tipo Secret Text en Jenkins
+        SONAR_AUTH_TOKEN = credentials('sonar-token')
     }
 
     stages {
@@ -14,13 +13,8 @@ pipeline {
             steps {
                 // Inicia el análisis SonarQube
                 withSonarQubeEnv('SonarQube') {
-                    sh '''
-                        export PATH="$PATH:$HOME/.dotnet/tools"
-                        dotnet sonarscanner begin /k:"${SONAR_PROJECT_KEY}" \
-                        /n:"${SONAR_PROJECT_NAME}" \
-                        /v:"${SONAR_PROJECT_VERSION}" \
-                        /d:sonar.login="${SONAR_AUTH_TOKEN}"
-                    '''
+                    sh "export PATH="$PATH:$HOME/.dotnet/tools"
+                    sh "dotnet sonarscanner begin /k:\"${SONAR_PROJECT_KEY}\" /n:\"${SONAR_PROJECT_NAME}\" /v:\"${SONAR_PROJECT_VERSION}\" /d:sonar.login=\"${SONAR_AUTH_TOKEN}\""
                 }
             }
         }
