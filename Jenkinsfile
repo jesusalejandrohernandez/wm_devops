@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        // Define SonarScanner para MSBuild
-        msbuildSonarQubeScanner 'SonarScanner for MSBuild'
-    }
-
     environment {
         // Variables para el proyecto SonarQube
         SONAR_PROJECT_KEY = 'DevOps'
