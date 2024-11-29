@@ -13,7 +13,7 @@ pipeline {
             steps {
                 // Inicia el análisis SonarQube
                 withSonarQubeEnv('SonarQube') {
-                    sh "export PATH="$PATH:$HOME/.dotnet/tools"
+                    sh "export PATH=\"$PATH:$HOME/.dotnet/tools\""
                     sh "dotnet sonarscanner begin /k:\"${SONAR_PROJECT_KEY}\" /n:\"${SONAR_PROJECT_NAME}\" /v:\"${SONAR_PROJECT_VERSION}\" /d:sonar.login=\"${SONAR_AUTH_TOKEN}\""
                 }
             }
