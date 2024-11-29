@@ -5,7 +5,6 @@ pipeline {
         appName = "variable" 
     }
     tools {
-        // Configura SonarQube Scanner como herramienta
         sonarQube 'SonarScanner for .NET'
     }
     stages {
@@ -17,10 +16,12 @@ pipeline {
             }
         }
         stage('Sonar Scan .NET') {
-            withSonarQubeEnv('SonarQube for .NET') {
-                sh "dotnet sonarscanner begin /k:\"DevOps\" /d:sonar.login=${SONAR_AUTH_TOKEN}"
-                sh "dotnet build"
-                sh "dotnet sonarscanner end /d:sonar.login=${SONAR_AUTH_TOKEN}"
+            steps {
+                withSonarQubeEnv('SonarQube for .NET') {
+                    sh "dotnet sonarscanner begin /k:\"DevOps\" /d:sonar.login=${SONAR_AUTH_TOKEN}"
+                    sh "dotnet build"
+                    sh "dotnet sonarscanner end /d:sonar.login=${SONAR_AUTH_TOKEN}"
+                }
             }
         }
     }
