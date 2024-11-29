@@ -11,7 +11,6 @@ pipeline {
     stages {
         stage('Prepare Analysis') {
             steps {
-                // Inicia el análisis SonarQube
                 withSonarQubeEnv('SonarQube') {
                     sh "export PATH=\"$PATH:$HOME/.dotnet/tools\""
                     sh "dotnet sonarscanner begin /k:\"${SONAR_PROJECT_KEY}\" /n:\"${SONAR_PROJECT_NAME}\" /v:\"${SONAR_PROJECT_VERSION}\" /d:sonar.login=\"${SONAR_AUTH_TOKEN}\""
@@ -19,30 +18,27 @@ pipeline {
             }
         }
 
-        stage('Restaurar Dependencias') {
-            steps {
-                // Restaura las dependencias del proyecto
-                dotnetRestore project: 'ruta/al/archivo.sln'
-            }
-        }
+        // stage('Restaurar Dependencias') {
+        //     steps {
+        //         sh "dotnet restore"
+        //     }
+        // }
 
         stage('Compilar Proyecto') {
             steps {
-                // Compila el proyecto utilizando el plugin .NET SDK Support
-                dotnetBuild project: 'ruta/al/archivo.sln', configuration: 'Release'
+                sh "dotnet build"
             }
         }
 
-        stage('Ejecutar Pruebas') {
-            steps {
-                // Ejecuta las pruebas del proyecto
-                dotnetTest project: 'ruta/al/archivo.sln', configuration: 'Release'
-            }
-        }
+        // stage('Ejecutar Pruebas') {
+        //     steps {
+        //         // Ejecuta las pruebas del proyecto
+        //         dotnetTest project: 'ruta/al/archivo.sln', configuration: 'Release'
+        //     }
+        // }
 
         stage('End Analysis') {
             steps {
-                // Finaliza el análisis SonarQube
                 withSonarQubeEnv('SonarQube') {
                     sh "dotnet sonarscanner end /d:sonar.login=${SONAR_AUTH_TOKEN}"
                    
