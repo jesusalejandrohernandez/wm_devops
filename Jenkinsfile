@@ -12,12 +12,11 @@ pipeline {
                 }
             }
         }
-        stage('SonarScanner for .NET') {
-            def scannerHome = tool 'SonarScanner for .NET'
-            withSonarQubeEnv() {
-                sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:\"DevOps\""
+        stage('Sonar Scan .NET') {
+            withSonarQubeEnv('SonarQube for .NET') {
+                sh "dotnet sonarscanner begin /k:\"DevOps\" /d:sonar.login=${SONAR_AUTH_TOKEN}"
                 sh "dotnet build"
-                sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
+                sh "dotnet sonarscanner end /d:sonar.login=${SONAR_AUTH_TOKEN}"
             }
         }
     }
