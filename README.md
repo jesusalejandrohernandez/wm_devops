@@ -1,8 +1,6 @@
-# Jenkins
+# Install
 
-## Install Docker
-
-### Windows
+## Jenkins Docker Windows
 
 Intalacion de Jenkins en Docker Desktop
 
@@ -40,3 +38,18 @@ docker run --name jenkins-docker --rm --detach ^
 Cuando accede por primera vez a un nuevo controlador Jenkins, se le solicita que lo desbloquee usando una contraseña generada automáticamente.
 
 Busque http://localhost:8080 y espere hasta que aparezca la página Desbloquear Jenkins
+
+## Sonarqube Docker Windows
+
+Intalacion de Sonarqube Community en Docker Desktop
+
+``` bash
+docker pull sonarqube
+```
+
+``` bash
+docker run -d --name sonarqube ^
+--network jenkins ^
+--publish 9000:9000 ^
+sonarqube:latest
+```
