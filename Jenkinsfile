@@ -12,6 +12,12 @@ pipeline {
            sh "echo 'hola mundo'"
         }
       }
+
+      steps {
+          script {			
+           sh "echo 'Hola Axity'"
+        }
+      }
     }
   }
   post {
