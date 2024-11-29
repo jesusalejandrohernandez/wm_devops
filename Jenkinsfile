@@ -8,8 +8,21 @@ pipeline {
         stage("paso 1"){
             steps {
                 script {			
-                sh "echo 'hola mundo'"
+                    sh "echo 'hola mundo'"
                 }
+            }
+        }
+    }
+    node {
+        stage('SCM') {
+            checkout scm
+        }
+        stage('SonarScanner for .NET') {
+            def scannerHome = tool 'SonarScanner for .NET'
+            withSonarQubeEnv() {
+                sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:\"DevOps\""
+                sh "dotnet build"
+                sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
             }
         }
     }
@@ -19,11 +32,11 @@ pipeline {
             sh "echo 'fase always'"
         }
         success {
-                sh "echo 'fase success'"
+            sh "echo 'fase success'"
         }
 
         failure {
-                sh "echo 'fase failure'"
+            sh "echo 'fase failure'"
         }   
     }
 }
