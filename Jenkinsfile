@@ -4,9 +4,7 @@ pipeline {
     environment {
         appName = "variable" 
     }
-    tools {
-        sonarQube 'SonarScanner for .NET'
-    }
+
     stages {
         stage("paso 1"){
             steps {
@@ -25,6 +23,7 @@ pipeline {
             }
         }
     }
+    
     post {
         always {          
             deleteDir()
