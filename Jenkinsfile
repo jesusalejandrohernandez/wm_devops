@@ -5,19 +5,20 @@ pipeline {
   }
   stages {
 
- stage("paso 1"){
-     
-      steps {
-          script {			
-           sh "echo 'hola mundo'"
+    stage("paso 1"){
+        steps {
+            script {			
+            sh "echo 'hola mundo'"
+          }
         }
-      }
+    }
 
-      steps {
-          script {			
-           sh "echo 'Hola Axity'"
+    stage("paso 2"){
+        steps {
+            script {			
+            sh "echo 'Hola Axity'"
+          }
         }
-      }
     }
   }
   post {
