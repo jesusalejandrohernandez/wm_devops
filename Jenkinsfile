@@ -12,11 +12,6 @@ pipeline {
                 }
             }
         }
-    }
-    node {
-        stage('SCM') {
-            checkout scm
-        }
         stage('SonarScanner for .NET') {
             def scannerHome = tool 'SonarScanner for .NET'
             withSonarQubeEnv() {
