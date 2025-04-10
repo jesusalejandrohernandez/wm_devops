@@ -65,8 +65,9 @@ namespace Axity.Users.Api
         {
             app.UseSwagger();
             app.UseSwaggerUI();
-            app.UseHttpsRedirection();
-            app.UseAuthorization();
+
+            // app.UseHttpsRedirection();
+            // app.UseAuthorization();
             app.MapControllers();
             return app;
         }

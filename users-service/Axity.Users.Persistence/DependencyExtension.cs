@@ -36,7 +36,7 @@ namespace Axity.Users.Persistence
             });
 
             services.AddScoped<IUsersDao, UsersDao>();
-            
+
             return services;
         }
     }

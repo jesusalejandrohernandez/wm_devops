@@ -1,0 +1,26 @@
+FROM jenkins/jenkins:alpine3.21-jdk21
+
+USER root
+
+# Instalar dependencias necesarias
+RUN apk update && apk add --no-cache \
+    curl \
+    bash \
+    openrc \
+    ca-certificates \
+    shadow
+
+# Agregar el repositorio correcto de Docker para Alpine
+RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
+
+# Instalar Docker CLI
+RUN apk update && apk add --no-cache docker-cli
+
+# Asignar permisos al usuario Jenkins para usar Docker
+RUN addgroup -S docker && adduser jenkins docker
+
+USER jenkins
+
+# Instalar plugins de Jenkins
+RUN jenkins-plugin-cli --plugins "blueocean docker-workflow"
