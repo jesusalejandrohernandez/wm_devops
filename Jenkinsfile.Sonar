@@ -9,7 +9,7 @@ pipeline {
     def scannerHome = tool 'SonarScanner for .NET'
     withSonarQubeEnv() {
       sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:\"XXXXXX\""
-      sh "dotnet build"
+      sh "dotnet build /users-service/Axity.Users.sln"
       sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
     }
   }
