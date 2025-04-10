@@ -1,5 +1,9 @@
 pipeline {
   agent { label 'principal' }
+  
+  environment {
+    SCANNER_HOME = tool name: 'SonarScanner for .NET'
+  }
 
   stages {
 
@@ -11,11 +15,10 @@ pipeline {
 
     stage('SonarQube Analysis') {
       steps {
-        def scannerHome = tool 'SonarScanner for .NET'
-        withSonarQubeEnv() {
-          sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:\"XXXXXX\""
+        withSonarQubeEnv('SonarScanner for .NET') {
+          sh "dotnet ${SCANNER_HOME}/SonarScanner.MSBuild.dll begin /k:\"XXXXXX\""
           sh "dotnet build /users-service/Axity.Users.sln"
-          sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
+          sh "dotnet ${SCANNER_HOME}/SonarScanner.MSBuild.dll end"
         }
       }
     }
