@@ -15,7 +15,7 @@ pipeline {
 
     stage('SonarQube Analysis') {
       steps {
-        withSonarQubeEnv('SonarScanner for .NET') {
+        withSonarQubeEnv('SonarQubeServer') {
           sh "dotnet ${SCANNER_HOME}/SonarScanner.MSBuild.dll begin /k:\"XXXXXX\""
           sh "dotnet build /users-service/Axity.Users.sln"
           sh "dotnet ${SCANNER_HOME}/SonarScanner.MSBuild.dll end"
