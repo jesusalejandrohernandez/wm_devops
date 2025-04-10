@@ -2,16 +2,21 @@ pipeline {
   agent { label 'principal' }
 
   stages {
+
     stage('SCM') {
-      checkout scm
+      steps {
+        checkout scm
+      }
     }
 
     stage('SonarQube Analysis') {
-      def scannerHome = tool 'SonarScanner for .NET'
-      withSonarQubeEnv() {
-        sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:\"XXXXXX\""
-        sh "dotnet build /users-service/Axity.Users.sln"
-        sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
+      steps {
+        def scannerHome = tool 'SonarScanner for .NET'
+        withSonarQubeEnv() {
+          sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:\"XXXXXX\""
+          sh "dotnet build /users-service/Axity.Users.sln"
+          sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
+        }
       }
     }
   }
